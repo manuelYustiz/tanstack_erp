@@ -1,0 +1,5 @@
+# Generated files that should not be linted or formatted
+src/routeTree.gen.ts
+routeTree.gen.ts
+dist
+node_modules
