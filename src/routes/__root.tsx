@@ -1,3 +1,5 @@
+import { FormDevtools } from "@tanstack/react-form-devtools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRoute, Link, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
@@ -21,6 +23,8 @@ export const Route = createRootRoute({
 			<hr />
 			<Outlet />
 			<TanStackRouterDevtools />
+			<ReactQueryDevtools />
+			<FormDevtools />
 		</>
 	),
 });
