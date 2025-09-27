@@ -1,22 +1,13 @@
 import { TanStackDevtools } from "@tanstack/react-devtools";
-import { FormDevtools } from "@tanstack/react-form-devtools";
-import {
-	ReactQueryDevtools,
-	ReactQueryDevtoolsPanel,
-} from "@tanstack/react-query-devtools";
+import { FormDevtoolsPlugin } from "@tanstack/react-form-devtools";
+import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
-import {
-	TanStackRouterDevtools,
-	TanStackRouterDevtoolsPanel,
-} from "@tanstack/router-devtools";
+import { TanStackRouterDevtoolsPanel } from "@tanstack/router-devtools";
 
 export const Route = createRootRoute({
 	component: () => (
 		<>
 			<Outlet />
-			<TanStackRouterDevtools />
-			<ReactQueryDevtools />
-			<FormDevtools />
 			<TanStackDevtools
 				plugins={[
 					{
@@ -27,6 +18,7 @@ export const Route = createRootRoute({
 						name: "TanStack Router",
 						render: <TanStackRouterDevtoolsPanel />,
 					},
+					FormDevtoolsPlugin(),
 				]}
 			/>
 		</>
