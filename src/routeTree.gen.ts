@@ -8,106 +8,52 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./routes/__root";
-import { Route as DashboardRouteImport } from "./routes/dashboard";
-import { Route as IndexRouteImport } from "./routes/index";
-import { Route as ProductsRouteImport } from "./routes/products";
-import { Route as UsersRouteImport } from "./routes/users";
+import { Route as rootRouteImport } from './routes/__root'
+import { Route as IndexRouteImport } from './routes/index'
 
-const UsersRoute = UsersRouteImport.update({
-	id: "/users",
-	path: "/users",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const ProductsRoute = ProductsRouteImport.update({
-	id: "/products",
-	path: "/products",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const DashboardRoute = DashboardRouteImport.update({
-	id: "/dashboard",
-	path: "/dashboard",
-	getParentRoute: () => rootRouteImport,
-} as any);
 const IndexRoute = IndexRouteImport.update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-	"/": typeof IndexRoute;
-	"/dashboard": typeof DashboardRoute;
-	"/products": typeof ProductsRoute;
-	"/users": typeof UsersRoute;
+  '/': typeof IndexRoute
 }
 export interface FileRoutesByTo {
-	"/": typeof IndexRoute;
-	"/dashboard": typeof DashboardRoute;
-	"/products": typeof ProductsRoute;
-	"/users": typeof UsersRoute;
+  '/': typeof IndexRoute
 }
 export interface FileRoutesById {
-	__root__: typeof rootRouteImport;
-	"/": typeof IndexRoute;
-	"/dashboard": typeof DashboardRoute;
-	"/products": typeof ProductsRoute;
-	"/users": typeof UsersRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
 }
 export interface FileRouteTypes {
-	fileRoutesByFullPath: FileRoutesByFullPath;
-	fullPaths: "/" | "/dashboard" | "/products" | "/users";
-	fileRoutesByTo: FileRoutesByTo;
-	to: "/" | "/dashboard" | "/products" | "/users";
-	id: "__root__" | "/" | "/dashboard" | "/products" | "/users";
-	fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths: '/'
+  fileRoutesByTo: FileRoutesByTo
+  to: '/'
+  id: '__root__' | '/'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-	IndexRoute: typeof IndexRoute;
-	DashboardRoute: typeof DashboardRoute;
-	ProductsRoute: typeof ProductsRoute;
-	UsersRoute: typeof UsersRoute;
+  IndexRoute: typeof IndexRoute
 }
 
-declare module "@tanstack/react-router" {
-	interface FileRoutesByPath {
-		"/users": {
-			id: "/users";
-			path: "/users";
-			fullPath: "/users";
-			preLoaderRoute: typeof UsersRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/products": {
-			id: "/products";
-			path: "/products";
-			fullPath: "/products";
-			preLoaderRoute: typeof ProductsRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/dashboard": {
-			id: "/dashboard";
-			path: "/dashboard";
-			fullPath: "/dashboard";
-			preLoaderRoute: typeof DashboardRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/": {
-			id: "/";
-			path: "/";
-			fullPath: "/";
-			preLoaderRoute: typeof IndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-	}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-	IndexRoute: IndexRoute,
-	DashboardRoute: DashboardRoute,
-	ProductsRoute: ProductsRoute,
-	UsersRoute: UsersRoute,
-};
+  IndexRoute: IndexRoute,
+}
 export const routeTree = rootRouteImport
-	._addFileChildren(rootRouteChildren)
-	._addFileTypes<FileRouteTypes>();
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
