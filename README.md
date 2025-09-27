@@ -9,6 +9,9 @@ A modern ERP system built with Vite, React, TypeScript, Biome, and TanStack Rout
 - 🔷 **TypeScript** - Type safety and better developer experience
 - 🧹 **Biome** - Fast linter and formatter (replacing ESLint + Prettier)
 - 🚦 **TanStack Router** - Type-safe routing with excellent developer experience
+- 🔄 **TanStack Query** - Powerful data synchronization for React
+- 📝 **TanStack Form** - Type-safe, performant forms for React
+- 🛠️ **Developer Tools** - Integrated devtools for Router, Query, and Form
 - 📁 **Screaming Architecture** - Feature-based organization for better maintainability
 
 ## Architecture
@@ -99,7 +102,10 @@ npm run format
 ### Technology Choices
 - **Biome over ESLint + Prettier**: Faster, single tool for linting and formatting
 - **TanStack Router**: Type-safe routing with excellent developer experience
+- **TanStack Query**: Powerful data synchronization and caching for React applications
+- **TanStack Form**: Type-safe, performant forms with built-in validation
 - **Vite**: Significantly faster than Create React App for development and builds
+- **Full TanStack DevTools**: Integrated debugging tools for Router, Query, and Form
 
 ## Routes
 
