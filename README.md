@@ -1,6 +1,6 @@
 # TanStack ERP
 
-A modern ERP system built with Vite, React, TypeScript, Biome, and TanStack Router using screaming architecture.
+A modern ERP system built with Vite, React, TypeScript, Biome, and TanStack Router using screaming architecture. Now featuring comprehensive internationalization support with FormatJS.
 
 ## Features
 
@@ -12,6 +12,7 @@ A modern ERP system built with Vite, React, TypeScript, Biome, and TanStack Rout
 - 🔄 **TanStack Query** - Powerful data synchronization for React
 - 📝 **TanStack Form** - Type-safe, performant forms for React
 - 🛠️ **Developer Tools** - Integrated devtools for Router, Query, and Form
+- 🌍 **Internationalization** - Multi-language support with FormatJS/react-intl
 - 📁 **Screaming Architecture** - Feature-based organization for better maintainability
 
 ## Architecture
@@ -32,6 +33,8 @@ src/
 │   ├── types/        # TypeScript type definitions
 │   ├── constants/    # Application constants
 │   ├── api/          # API utilities and configurations
+│   ├── i18n/         # Internationalization configuration
+│   ├── locales/      # Translation message files
 │   └── styles/       # Global styles
 ├── pages/            # Page components (if needed for complex layouts)
 ├── layouts/          # Layout components
@@ -91,6 +94,83 @@ Format code:
 npm run format
 ```
 
+## Internationalization (i18n)
+
+This project includes comprehensive internationalization support using FormatJS (react-intl).
+
+### Supported Languages
+
+- 🇺🇸 **English** - Default language
+- 🇪🇸 **Spanish** - Complete translation coverage
+
+### Features
+
+- **Language Switching**: Users can switch languages via the dropdown selector in the UI
+- **Persistent Preferences**: Language selection is saved to localStorage
+- **Locale-aware Formatting**: Numbers, dates, and currency are formatted according to the selected locale
+- **Type-safe Messages**: Full TypeScript support for translation keys and values
+- **React Integration**: Easy-to-use hooks and components for internationalized content
+
+### Usage
+
+#### Using FormattedMessage Components
+```tsx
+import { FormattedMessage } from 'react-intl';
+
+function MyComponent() {
+  return (
+    <h1>
+      <FormattedMessage id="app.welcome" />
+    </h1>
+  );
+}
+```
+
+#### Using Hooks for Dynamic Content
+```tsx
+import { useIntl } from 'react-intl';
+
+function MyComponent() {
+  const intl = useIntl();
+  
+  const message = intl.formatMessage({ id: 'app.description' });
+  return <p>{message}</p>;
+}
+```
+
+#### Using Locale-aware Formatters
+```tsx
+import { useFormatters } from './shared/hooks/useFormatters';
+
+function MyComponent() {
+  const { formatCurrency, formatDate } = useFormatters();
+  
+  return (
+    <div>
+      <p>Price: {formatCurrency(1234.56)}</p>
+      <p>Date: {formatDate(new Date())}</p>
+    </div>
+  );
+}
+```
+
+### Adding New Languages
+
+1. Create a new message file in `src/shared/locales/{locale}/messages.json`
+2. Add the locale to `AVAILABLE_LOCALES` in `src/shared/i18n/index.ts`
+3. Update the `SupportedLocale` type to include the new locale
+
+### Message Files Structure
+
+Translation files are located in `src/shared/locales/` with the following structure:
+```
+src/shared/locales/
+├── en/
+│   └── messages.json
+└── es/
+    └── messages.json
+```
+
 ## Project Structure Benefits
 
 ### Screaming Architecture
@@ -99,11 +179,18 @@ npm run format
 - **Team-friendly**: Multiple developers can work on different features simultaneously
 - **Domain-driven**: The structure reflects the business domain, making it easier to understand
 
+### Internationalization Benefits
+- **Global Ready**: Built-in support for multiple languages and locales
+- **User Experience**: Seamless language switching with persistent preferences
+- **Developer Experience**: Type-safe translations and locale-aware formatting utilities
+- **Extensible**: Easy to add new languages and regions as the application grows
+
 ### Technology Choices
 - **Biome over ESLint + Prettier**: Faster, single tool for linting and formatting
 - **TanStack Router**: Type-safe routing with excellent developer experience
 - **TanStack Query**: Powerful data synchronization and caching for React applications
 - **TanStack Form**: Type-safe, performant forms with built-in validation
+- **FormatJS (react-intl)**: Industry-standard internationalization library with powerful formatting capabilities
 - **Vite**: Significantly faster than Create React App for development and builds
 - **Full TanStack DevTools**: Integrated debugging tools for Router, Query, and Form
 
