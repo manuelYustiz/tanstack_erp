@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "../ui/button";
-import { Sheet, SheetContent } from "../ui/sheet";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "../ui/sheet";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
 import { ChevronRight, X } from "lucide-react";
 import { menuItems, type MenuItem } from "./menu-items";
@@ -80,6 +80,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 				<h1 className="text-xl font-bold text-theme-primary">
 					TanStack ERP
 				</h1>
+				{/* Only show close button on mobile sidebar */}
 				<Button
 					variant="ghost"
 					size="icon"
@@ -121,6 +122,12 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 			{/* Mobile sidebar */}
 			<Sheet open={isOpen} onOpenChange={onClose}>
 				<SheetContent side="left" className="w-64 p-0">
+					<SheetHeader className="sr-only">
+						<SheetTitle>Menú de navegación</SheetTitle>
+						<SheetDescription>
+							Navegue por las diferentes secciones del sistema ERP
+						</SheetDescription>
+					</SheetHeader>
 					<SidebarContent />
 				</SheetContent>
 			</Sheet>
