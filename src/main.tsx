@@ -3,6 +3,7 @@ import { createRouter, RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { routeTree } from "./routeTree.gen";
+import { IntlProvider } from "./shared/components/IntlProvider";
 import "./shared/styles/globals.css";
 
 // Create a new router instance
@@ -21,8 +22,10 @@ declare module "@tanstack/react-router" {
 // biome-ignore lint/style/noNonNullAssertion: This is safe as we know the element exists
 createRoot(document.getElementById("root")!).render(
 	<StrictMode>
-		<QueryClientProvider client={queryClient}>
-			<RouterProvider router={router} />
-		</QueryClientProvider>
+		<IntlProvider>
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider router={router} />
+			</QueryClientProvider>
+		</IntlProvider>
 	</StrictMode>
 );

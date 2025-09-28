@@ -1,0 +1,18 @@
+{
+  "app.title": "TanStack ERP",
+  "app.welcome": "Bienvenido a TanStack ERP",
+  "app.description": "Un sistema ERP moderno y type-safe construido con herramientas TanStack",
+  "features.title": "Características Incluidas",
+  "features.vite": "Vite para desarrollo y builds rápidos",
+  "features.react": "React con TypeScript para seguridad de tipos",
+  "features.biome": "Biome para linting y formateo",
+  "features.router": "TanStack Router para routing type-safe",
+  "features.architecture": "Arquitectura gritona para organización basada en características",
+  "features.tailwind": "Tailwind CSS para estilos utility-first",
+  "features.theme": "Sistema multi-tema con soporte para modo oscuro/claro",
+  "theme.demo.title": "Demo del Sistema de Temas",
+  "theme.toggle": "Cambiar a Modo {mode}",
+  "theme.current": "Configuración Actual: tema {theme} en modo {mode}",
+  "common.light": "Claro",
+  "common.dark": "Oscuro"
+}
