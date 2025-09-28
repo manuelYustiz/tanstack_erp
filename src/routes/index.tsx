@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useId } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useIntlContext } from "../shared/components/IntlProvider";
 import { Button } from "../shared/components/ui/button";
 import { Checkbox } from "../shared/components/ui/checkbox";
-import { useIntlContext } from "../shared/components/IntlProvider";
 import { useTheme } from "../shared/hooks/useTheme";
-import { AVAILABLE_LOCALES } from "../shared/i18n";
+import { AVAILABLE_LOCALES, type SupportedLocale } from "../shared/i18n";
 
 export const Route = createFileRoute("/")({
 	component: Home,
@@ -24,7 +24,7 @@ function Home() {
 				<div className="flex justify-end mb-4">
 					<select
 						value={locale}
-						onChange={(e) => setLocale(e.target.value as any)}
+						onChange={(e) => setLocale(e.target.value as SupportedLocale)}
 						className="px-3 py-1 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm"
 					>
 						{AVAILABLE_LOCALES.map((lang) => (

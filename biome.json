@@ -24,7 +24,8 @@
 				"recommended": true
 			},
 			"correctness": {
-				"recommended": true
+				"recommended": true,
+				"useUniqueElementIds": "off"
 			},
 			"performance": {
 				"recommended": true
@@ -36,7 +37,8 @@
 				"recommended": true
 			},
 			"suspicious": {
-				"recommended": true
+				"recommended": true,
+				"noUnknownAtRules": "off"
 			}
 		}
 	},

@@ -1,0 +1,59 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "dev",
+			"group": "build",
+			"label": "npm: dev",
+			"detail": "vite",
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "vite",
+				"source": "vite",
+				"fileLocation": "relative",
+				"pattern": {
+					"regexp": "^(.+):(\\d+):(\\d+):\\s+(warning|error):\\s+(.+)$",
+					"file": 1,
+					"line": 2,
+					"column": 3,
+					"severity": 4,
+					"message": 5
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "Local:\\s+http://localhost:\\d+",
+					"endsPattern": "ready in \\d+ms\\."
+				}
+			}
+		},
+		{
+			"type": "npm",
+			"script": "build",
+			"group": "build",
+			"label": "npm: build",
+			"detail": "tsc -b && vite build"
+		},
+		{
+			"type": "npm",
+			"script": "lint",
+			"group": "test",
+			"label": "npm: lint",
+			"detail": "biome check"
+		},
+		{
+			"type": "npm",
+			"script": "lint:fix",
+			"group": "test",
+			"label": "npm: lint:fix",
+			"detail": "biome check --write"
+		},
+		{
+			"type": "npm",
+			"script": "format",
+			"group": "test",
+			"label": "npm: format",
+			"detail": "biome format --write"
+		}
+	]
+}
