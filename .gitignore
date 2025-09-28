@@ -14,8 +14,9 @@ dist-ssr
 package-lock.json
 
 # Editor directories and files
-.vscode/*
-!.vscode/extensions.json
+# Allow sharing VSCode settings for project configuration
+# .vscode/*
+# !.vscode/extensions.json
 .idea
 .DS_Store
 *.suo

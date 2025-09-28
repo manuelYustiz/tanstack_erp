@@ -194,6 +194,28 @@ src/shared/locales/
 - **Vite**: Significantly faster than Create React App for development and builds
 - **Full TanStack DevTools**: Integrated debugging tools for Router, Query, and Form
 
+## VSCode Configuration
+
+This project includes shared VSCode configuration for consistent development experience:
+
+### Automatic Setup
+- **Format on Save**: Automatically formats code using Biome when saving files
+- **Code Actions on Save**: Organizes imports and applies quick fixes
+- **Extensions**: Recommended extensions are automatically suggested
+
+### Recommended Extensions
+- **Biome**: Primary linter and formatter (replaces ESLint + Prettier)
+- **Tailwind CSS IntelliSense**: Enhanced Tailwind CSS support
+- **TypeScript**: Latest TypeScript language features
+- **Auto Rename Tag**: Automatically renames paired HTML/JSX tags
+- **Path Intellisense**: Autocompletes filenames
+
+### Configuration Files
+- `.vscode/settings.json`: Editor settings and formatter configuration
+- `.vscode/extensions.json`: Recommended and unwanted extensions
+- `.vscode/tasks.json`: Predefined tasks for development commands
+- `.vscode/launch.json`: Debug configuration for Chrome
+
 ## Routes
 
 - `/` - Home page with project overview
