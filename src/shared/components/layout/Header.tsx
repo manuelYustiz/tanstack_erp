@@ -1,6 +1,17 @@
 import { useState } from "react";
 import { useTheme } from "../../hooks/useTheme";
 import { Button } from "../ui/button";
+import {
+	DropdownMenu,
+	DropdownMenuContent,
+	DropdownMenuItem,
+	DropdownMenuLabel,
+	DropdownMenuSeparator,
+	DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Badge } from "../ui/badge";
+import { Bell, Menu, Palette, Sun, Moon, User, Settings, LogOut } from "lucide-react";
 
 interface HeaderProps {
 	title: string;
@@ -9,37 +20,21 @@ interface HeaderProps {
 
 export function Header({ title, onMenuClick }: HeaderProps) {
 	const { theme, mode, toggleTheme, toggleMode } = useTheme();
-	const [userMenuOpen, setUserMenuOpen] = useState(false);
 	const [notificationsOpen, setNotificationsOpen] = useState(false);
 
 	// Mock user data
 	const currentUser = {
 		name: "Admin Usuario",
 		email: "admin@tanstack-erp.com",
-		avatar: "👤",
+		initials: "AU",
 		role: "Administrador",
 	};
 
 	// Mock notifications
 	const notifications = [
-		{
-			id: 1,
-			message: "Nueva orden recibida #1234",
-			time: "5 min",
-			unread: true,
-		},
-		{
-			id: 2,
-			message: "Stock bajo en Producto XYZ",
-			time: "15 min",
-			unread: true,
-		},
-		{
-			id: 3,
-			message: "Reporte mensual generado",
-			time: "1 hora",
-			unread: false,
-		},
+		{ id: 1, message: "Nueva orden recibida #1234", time: "5 min", unread: true },
+		{ id: 2, message: "Stock bajo en Producto XYZ", time: "15 min", unread: true },
+		{ id: 3, message: "Reporte mensual generado", time: "1 hora", unread: false },
 	];
 
 	const unreadCount = notifications.filter((n) => n.unread).length;
@@ -50,13 +45,15 @@ export function Header({ title, onMenuClick }: HeaderProps) {
 				{/* Left side */}
 				<div className="flex items-center space-x-4">
 					{/* Mobile menu button */}
-					<button
-						type="button"
+					<Button
+						variant="ghost"
+						size="icon"
 						onClick={onMenuClick}
-						className="lg:hidden p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+						className="lg:hidden"
 					>
-						<span className="text-xl">☰</span>
-					</button>
+						<Menu className="h-5 w-5" />
+						<span className="sr-only">Abrir menú</span>
+					</Button>
 
 					{/* Page title */}
 					<h2 className="text-xl font-semibold text-gray-900 dark:text-white">
@@ -66,160 +63,137 @@ export function Header({ title, onMenuClick }: HeaderProps) {
 
 				{/* Right side */}
 				<div className="flex items-center space-x-4">
-					{/* Theme controls */}
+					{/* Theme controls - Desktop only */}
 					<div className="hidden md:flex items-center space-x-2">
-						<Button
-							onClick={toggleTheme}
-							variant="ghost"
-							size="sm"
-							className="text-xs"
-						>
-							{theme === "theme-1" ? "🔵" : "🟢"} Tema
+						<Button onClick={toggleTheme} variant="ghost" size="sm">
+							<Palette className="h-4 w-4 mr-1" />
+							{theme === "theme-1" ? "Azul" : "Verde"}
 						</Button>
-						<Button
-							onClick={toggleMode}
-							variant="ghost"
-							size="sm"
-							className="text-xs"
-						>
-							{mode === "dark" ? "☀️" : "🌙"}
+						<Button onClick={toggleMode} variant="ghost" size="sm">
+							{mode === "dark" ? (
+								<Sun className="h-4 w-4" />
+							) : (
+								<Moon className="h-4 w-4" />
+							)}
 						</Button>
 					</div>
 
 					{/* Notifications */}
-					<div className="relative">
-						<button
-							type="button"
-							onClick={() => setNotificationsOpen(!notificationsOpen)}
-							className="relative p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
-						>
-							<span className="text-xl">🔔</span>
-							{unreadCount > 0 && (
-								<span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white">
-									{unreadCount}
-								</span>
-							)}
-						</button>
-
-						{/* Notifications dropdown */}
-						{notificationsOpen && (
-							<div className="absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50">
-								<div className="p-4 border-b border-gray-200 dark:border-gray-700">
-									<h3 className="font-semibold text-gray-900 dark:text-white">
-										Notificaciones
-									</h3>
-								</div>
-								<div className="max-h-64 overflow-y-auto">
-									{notifications.map((notification) => (
-										<div
-											key={notification.id}
-											className={`p-4 border-b border-gray-100 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700 ${
-												notification.unread
-													? "bg-blue-50 dark:bg-blue-900/20"
-													: ""
-											}`}
-										>
-											<p className="text-sm text-gray-900 dark:text-white">
-												{notification.message}
-											</p>
-											<p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-												Hace {notification.time}
-											</p>
-										</div>
-									))}
-								</div>
-								<div className="p-4">
-									<Button variant="ghost" size="sm" className="w-full">
-										Ver todas las notificaciones
-									</Button>
-								</div>
+					<DropdownMenu
+						open={notificationsOpen}
+						onOpenChange={setNotificationsOpen}
+					>
+						<DropdownMenuTrigger asChild>
+							<Button variant="ghost" size="icon" className="relative">
+								<Bell className="h-5 w-5" />
+								{unreadCount > 0 && (
+									<Badge
+										variant="destructive"
+										className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 text-xs"
+									>
+										{unreadCount}
+									</Badge>
+								)}
+								<span className="sr-only">Notificaciones</span>
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end" className="w-80">
+							<DropdownMenuLabel>Notificaciones</DropdownMenuLabel>
+							<DropdownMenuSeparator />
+							<div className="max-h-64 overflow-y-auto">
+								{notifications.map((notification) => (
+									<DropdownMenuItem
+										key={notification.id}
+										className={`flex flex-col items-start p-4 ${
+											notification.unread
+												? "bg-blue-50 dark:bg-blue-900/20"
+												: ""
+										}`}
+									>
+										<p className="text-sm font-medium">
+											{notification.message}
+										</p>
+										<p className="text-xs text-gray-500 dark:text-gray-400">
+											Hace {notification.time}
+										</p>
+									</DropdownMenuItem>
+								))}
 							</div>
-						)}
-					</div>
+							<DropdownMenuSeparator />
+							<DropdownMenuItem className="text-center">
+								Ver todas las notificaciones
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
 
 					{/* User menu */}
-					<div className="relative">
-						<button
-							type="button"
-							onClick={() => setUserMenuOpen(!userMenuOpen)}
-							className="flex items-center space-x-2 p-2 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg"
-						>
-							<span className="text-2xl">{currentUser.avatar}</span>
-							<div className="hidden md:block text-left">
-								<p className="text-sm font-medium">{currentUser.name}</p>
-								<p className="text-xs text-gray-500 dark:text-gray-400">
-									{currentUser.role}
-								</p>
-							</div>
-							<span className="text-xs">▼</span>
-						</button>
-
-						{/* User dropdown */}
-						{userMenuOpen && (
-							<div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg z-50">
-								<div className="p-4 border-b border-gray-200 dark:border-gray-700">
-									<p className="font-medium text-gray-900 dark:text-white">
+					<DropdownMenu>
+						<DropdownMenuTrigger asChild>
+							<Button variant="ghost" className="relative h-10 w-auto px-2">
+								<Avatar className="h-8 w-8">
+									<AvatarFallback className="bg-theme-primary text-white text-sm">
+										{currentUser.initials}
+									</AvatarFallback>
+								</Avatar>
+								<div className="hidden md:block ml-2 text-left">
+									<p className="text-sm font-medium text-gray-900 dark:text-white">
 										{currentUser.name}
 									</p>
-									<p className="text-sm text-gray-500 dark:text-gray-400">
+									<p className="text-xs text-gray-500 dark:text-gray-400">
+										{currentUser.role}
+									</p>
+								</div>
+							</Button>
+						</DropdownMenuTrigger>
+						<DropdownMenuContent align="end" className="w-56">
+							<DropdownMenuLabel className="font-normal">
+								<div className="flex flex-col space-y-1">
+									<p className="text-sm font-medium leading-none">
+										{currentUser.name}
+									</p>
+									<p className="text-xs leading-none text-gray-500 dark:text-gray-400">
 										{currentUser.email}
 									</p>
 								</div>
-								<div className="p-2">
-									<button type="button" className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
-										👤 Mi Perfil
-									</button>
-									<button type="button" className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded">
-										⚙️ Configuración
-									</button>
-									<div className="md:hidden border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
-										<button
-											type="button"
-											onClick={toggleTheme}
-											className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
-										>
-											{theme === "theme-1" ? "🔵" : "🟢"} Cambiar Tema
-										</button>
-										<button
-											type="button"
-											onClick={toggleMode}
-											className="w-full text-left px-3 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
-										>
-											{mode === "dark" ? "☀️" : "🌙"}{" "}
-											{mode === "dark" ? "Modo Claro" : "Modo Oscuro"}
-										</button>
-									</div>
-									<div className="border-t border-gray-200 dark:border-gray-700 mt-2 pt-2">
-										<button type="button" className="w-full text-left px-3 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded">
-											🚪 Cerrar Sesión
-										</button>
-									</div>
-								</div>
+							</DropdownMenuLabel>
+							<DropdownMenuSeparator />
+							<DropdownMenuItem>
+								<User className="mr-2 h-4 w-4" />
+								<span>Mi Perfil</span>
+							</DropdownMenuItem>
+							<DropdownMenuItem>
+								<Settings className="mr-2 h-4 w-4" />
+								<span>Configuración</span>
+							</DropdownMenuItem>
+							{/* Mobile theme controls */}
+							<div className="md:hidden">
+								<DropdownMenuSeparator />
+								<DropdownMenuItem onClick={toggleTheme}>
+									<Palette className="mr-2 h-4 w-4" />
+									<span>
+										Tema: {theme === "theme-1" ? "Azul" : "Verde"}
+									</span>
+								</DropdownMenuItem>
+								<DropdownMenuItem onClick={toggleMode}>
+									{mode === "dark" ? (
+										<Sun className="mr-2 h-4 w-4" />
+									) : (
+										<Moon className="mr-2 h-4 w-4" />
+									)}
+									<span>
+										{mode === "dark" ? "Modo Claro" : "Modo Oscuro"}
+									</span>
+								</DropdownMenuItem>
 							</div>
-						)}
-					</div>
+							<DropdownMenuSeparator />
+							<DropdownMenuItem className="text-red-600">
+								<LogOut className="mr-2 h-4 w-4" />
+								<span>Cerrar Sesión</span>
+							</DropdownMenuItem>
+						</DropdownMenuContent>
+					</DropdownMenu>
 				</div>
 			</div>
-
-			{/* Close dropdowns when clicking outside */}
-			{(userMenuOpen || notificationsOpen) && (
-				<div
-					className="fixed inset-0 z-20"
-					onClick={() => {
-						setUserMenuOpen(false);
-						setNotificationsOpen(false);
-					}}
-					onKeyDown={(e) => {
-						if (e.key === 'Escape') {
-							setUserMenuOpen(false);
-							setNotificationsOpen(false);
-						}
-					}}
-					role="button"
-					tabIndex={0}
-					aria-label="Close menus"
-				/>
-			)}
 		</header>
 	);
 }

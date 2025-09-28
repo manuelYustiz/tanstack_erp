@@ -31,22 +31,6 @@ export function AdminLayout({
 				{/* Page content */}
 				<main className="p-6">{children}</main>
 			</div>
-
-			{/* Mobile sidebar overlay */}
-			{sidebarOpen && (
-				<div
-					className="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"
-					onClick={() => setSidebarOpen(false)}
-					onKeyDown={(e) => {
-						if (e.key === 'Escape') {
-							setSidebarOpen(false);
-						}
-					}}
-					role="button"
-					tabIndex={0}
-					aria-label="Close sidebar"
-				/>
-			)}
 		</div>
 	);
 }
