@@ -1,142 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent } from "../ui/sheet";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../ui/collapsible";
-import { 
-	LayoutDashboard, 
-	Users, 
-	Package, 
-	DollarSign, 
-	Settings,
-	FileText,
-	Shield,
-	FolderOpen,
-	TrendingUp,
-	ShoppingCart,
-	Receipt,
-	BarChart3,
-	Wrench,
-	ChevronRight,
-	X
-} from "lucide-react";
+import { ChevronRight, X } from "lucide-react";
+import { menuItems, type MenuItem } from "./menu-items";
 
 interface SidebarProps {
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-interface MenuItem {
-	id: string;
-	label: string;
-	href: string;
-	icon: React.ReactNode;
-	children?: MenuItem[];
-}
-
-const menuItems: MenuItem[] = [
-	{
-		id: 'dashboard',
-		label: 'Dashboard',
-		href: '/admin',
-		icon: <LayoutDashboard className="h-5 w-5" />,
-	},
-	{
-		id: 'users',
-		label: 'Gestión de Usuarios',
-		href: '/admin/users',
-		icon: <Users className="h-5 w-5" />,
-		children: [
-			{ 
-				id: 'users-list', 
-				label: 'Lista de Usuarios', 
-				href: '/admin/users', 
-				icon: <FileText className="h-4 w-4" /> 
-			},
-			{ 
-				id: 'users-roles', 
-				label: 'Roles y Permisos', 
-				href: '/admin/users/roles', 
-				icon: <Shield className="h-4 w-4" /> 
-			},
-		],
-	},
-	{
-		id: 'products',
-		label: 'Inventario',
-		href: '/admin/products',
-		icon: <Package className="h-5 w-5" />,
-		children: [
-			{ 
-				id: 'products-list', 
-				label: 'Productos', 
-				href: '/admin/products', 
-				icon: <Package className="h-4 w-4" /> 
-			},
-			{ 
-				id: 'categories', 
-				label: 'Categorías', 
-				href: '/admin/products/categories', 
-				icon: <FolderOpen className="h-4 w-4" /> 
-			},
-			{ 
-				id: 'stock', 
-				label: 'Control de Stock', 
-				href: '/admin/products/stock', 
-				icon: <TrendingUp className="h-4 w-4" /> 
-			},
-		],
-	},
-	{
-		id: 'sales',
-		label: 'Ventas',
-		href: '/admin/sales',
-		icon: <DollarSign className="h-5 w-5" />,
-		children: [
-			{ 
-				id: 'orders', 
-				label: 'Órdenes', 
-				href: '/admin/sales/orders', 
-				icon: <ShoppingCart className="h-4 w-4" /> 
-			},
-			{ 
-				id: 'invoices', 
-				label: 'Facturas', 
-				href: '/admin/sales/invoices', 
-				icon: <Receipt className="h-4 w-4" /> 
-			},
-			{ 
-				id: 'reports', 
-				label: 'Reportes', 
-				href: '/admin/sales/reports', 
-				icon: <BarChart3 className="h-4 w-4" /> 
-			},
-		],
-	},
-	{
-		id: 'settings',
-		label: 'Configuración',
-		href: '/admin/settings',
-		icon: <Settings className="h-5 w-5" />,
-		children: [
-			{ 
-				id: 'general', 
-				label: 'General', 
-				href: '/admin/settings/general', 
-				icon: <Wrench className="h-4 w-4" /> 
-			},
-			{ 
-				id: 'security', 
-				label: 'Seguridad', 
-				href: '/admin/settings/security', 
-				icon: <Shield className="h-4 w-4" /> 
-			},
-		],
-	},
-];
-
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
 	const [expandedItems, setExpandedItems] = useState<string[]>(['dashboard']);
+	const [isDesktop, setIsDesktop] = useState(false);
+
+	useEffect(() => {
+		const checkScreenSize = () => {
+			setIsDesktop(window.innerWidth >= 1024);
+		};
+
+		checkScreenSize();
+		window.addEventListener('resize', checkScreenSize);
+		return () => window.removeEventListener('resize', checkScreenSize);
+	}, []);
 
 	const toggleExpand = (itemId: string) => {
 		setExpandedItems(prev => 
@@ -222,12 +109,14 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
 
 	return (
 		<>
-			{/* Desktop sidebar */}
-			<div className="hidden lg:flex lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:w-64">
-				<div className="flex grow flex-col overflow-y-auto bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700">
-					<SidebarContent />
-				</div>
-			</div>
+			{/* Desktop sidebar - conditionally rendered based on screen size */}
+			{isDesktop && (
+				<aside className="fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700">
+					<div className="flex h-full flex-col overflow-y-auto">
+						<SidebarContent />
+					</div>
+				</aside>
+			)}
 
 			{/* Mobile sidebar */}
 			<Sheet open={isOpen} onOpenChange={onClose}>
