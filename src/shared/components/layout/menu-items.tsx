@@ -1,5 +1,4 @@
 import { 
-	LayoutDashboard, 
 	Users, 
 	Package, 
 	DollarSign, 
@@ -23,12 +22,6 @@ export interface MenuItem {
 }
 
 export const menuItems: MenuItem[] = [
-	{
-		id: 'dashboard',
-		label: 'Dashboard',
-		href: '/admin',
-		icon: <LayoutDashboard className="h-5 w-5" />,
-	},
 	{
 		id: 'users',
 		label: 'Gestión de Usuarios',
