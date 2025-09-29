@@ -1,0 +1,161 @@
+# GitHub Copilot Configuration for TanStack ERP
+
+# This configuration file helps GitHub Copilot understand the project context,
+# coding standards, and architectural patterns used in TanStack ERP.
+
+# Project Overview
+# This is a modern ERP system built with React, TypeScript, Vite, and TanStack ecosystem
+# following Screaming Architecture and SOLID principles.
+
+# Key Technologies and Patterns
+technologies:
+  - React 19 with TypeScript
+  - TanStack Router for type-safe routing
+  - TanStack Query for data synchronization
+  - TanStack Form for type-safe forms
+  - Biome for linting and formatting (not ESLint/Prettier)
+  - Tailwind CSS for styling
+  - FormatJS/react-intl for internationalization
+  - Day.js for date/time handling with timezone support
+  - Vite for build tooling
+
+# Architecture Principles
+architecture:
+  pattern: "Screaming Architecture"
+  description: "Feature-based organization that reflects business domain"
+  principles:
+    - "SOLID principles (Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, Dependency Inversion)"
+    - "Feature isolation and self-contained modules"
+    - "Separation of concerns (UI, business logic, data access)"
+    - "Composition over inheritance"
+    - "Type safety with TypeScript strict mode"
+
+# Folder Structure Guidelines
+folder_structure:
+  features: "Business domain features (auth, dashboard, users, products)"
+  shared: "Shared utilities and components across features"
+  each_feature_contains:
+    - "components/ - Feature-specific UI components"
+    - "hooks/ - Feature-specific React hooks" 
+    - "services/ - API calls and business logic"
+    - "types/ - Feature-specific TypeScript interfaces"
+    - "utils/ - Feature-specific utility functions"
+    - "index.ts - Public API exports"
+
+# Development Standards
+standards:
+  dependencies:
+    policy: "Exact version pinning for all packages"
+    installation: "Always use --save-exact flag"
+    reasoning: "Ensures consistent behavior across environments"
+  
+  typescript:
+    strict_mode: true
+    no_any_types: "Use proper typing or unknown with type guards"
+    prefer_interfaces: "Use interfaces over type aliases for object shapes"
+    generic_constraints: "Use constraints for reusable components"
+  
+  react:
+    component_style: "Functional components with hooks"
+    state_management: "Custom hooks for reusable logic"
+    props: "Define clear interfaces for all component props"
+    composition: "Prefer composition over prop drilling"
+  
+  code_style:
+    formatter: "Biome (replaces ESLint + Prettier)"
+    auto_format: "Format on save enabled"
+    naming: "Descriptive names that indicate purpose"
+
+# Code Quality Commands
+commands:
+  lint: "npm run lint"
+  lint_fix: "npm run lint:fix"
+  format: "npm run format"
+  build: "npm run build"
+  dev: "npm run dev"
+
+# Internationalization Guidelines
+i18n:
+  library: "FormatJS/react-intl"
+  supported_locales: ["en", "es"]
+  message_files: "src/shared/locales/{locale}/messages.json"
+  key_naming: "Descriptive keys indicating context"
+  icu_format: "Use ICU MessageFormat for complex formatting"
+
+# Date/Time Handling
+datetime:
+  library: "Day.js with timezone support"
+  timezone_persistence: "Save user preferences to localStorage"
+  formatters: "Locale-aware formatting via useFormatters hook"
+
+# Testing Approach
+testing:
+  location: "Tests next to files with .test.ts/.test.tsx extensions"
+  pattern: "Arrange, Act, Assert"
+  solid_in_tests:
+    - "SRP: Each test verifies one specific behavior"
+    - "OCP: Tests resilient to implementation changes"
+    - "ISP: Mock only interfaces component actually uses"
+    - "DIP: Test against interfaces, not implementations"
+
+# Common Patterns and Examples
+
+# Feature Creation Pattern:
+# 1. Start with types/interfaces (ISP)
+# 2. Create service interfaces (DIP) 
+# 3. Implement hooks for state management (SRP)
+# 4. Build components using composition (OCP)
+# 5. Export public API through index.ts (ISP)
+
+# Component Pattern:
+# - Define clear props interface
+# - Use composition for flexibility
+# - Extract reusable logic to custom hooks
+# - Follow single responsibility principle
+
+# Service Pattern:
+# - Create service interfaces for abstraction
+# - Implement concrete services with dependency injection
+# - Use TanStack Query for data fetching
+# - Separate concerns between API and business logic
+
+# Styling Pattern:
+# - Use Tailwind CSS utility classes
+# - Follow mobile-first responsive design
+# - Maintain consistent design system
+# - Prefer composition over large utility lists
+
+# Error Handling:
+# - Use TypeScript for compile-time error prevention
+# - Handle async operations with proper error boundaries
+# - Provide meaningful error messages for users
+# - Log errors appropriately for debugging
+
+# Performance Considerations:
+# - Use React.memo for expensive components
+# - Implement proper loading states
+# - Optimize bundle size with code splitting
+# - Cache data appropriately with TanStack Query
+
+# Accessibility:
+# - Use semantic HTML elements
+# - Implement proper ARIA attributes
+# - Ensure keyboard navigation support
+# - Test with screen readers
+
+# Security:
+# - Validate all inputs with Zod schemas
+# - Sanitize user-generated content
+# - Implement proper authentication flows
+# - Use HTTPS in production
+
+# Code Review Checklist:
+# - Follows SOLID principles
+# - Uses exact version dependencies
+# - Includes proper TypeScript types
+# - Follows established patterns
+# - No linting errors
+# - Builds successfully
+# - Maintains feature isolation
+# - Includes proper error handling
+# - Follows accessibility guidelines
