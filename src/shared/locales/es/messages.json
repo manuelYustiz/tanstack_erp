@@ -14,5 +14,10 @@
 	"theme.toggle": "Cambiar a Modo {mode}",
 	"theme.current": "Configuración Actual: tema {theme} en modo {mode}",
 	"common.light": "Claro",
-	"common.dark": "Oscuro"
+	"common.dark": "Oscuro",
+	"error.404.title": "Página No Encontrada",
+	"error.404.subtitle": "La página que buscas no existe",
+	"error.404.description": "Parece que la página a la que intentas acceder no existe o ha sido movida. Por favor, verifica la URL o navega de vuelta a la página principal.",
+	"error.404.back_home": "Volver al Inicio",
+	"error.404.back_previous": "Volver Atrás"
 }

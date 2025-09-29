@@ -14,5 +14,10 @@
 	"theme.toggle": "Toggle {mode} Mode",
 	"theme.current": "Current Configuration: {theme} theme in {mode} mode",
 	"common.light": "Light",
-	"common.dark": "Dark"
+	"common.dark": "Dark",
+	"error.404.title": "Page Not Found",
+	"error.404.subtitle": "The page you are looking for does not exist",
+	"error.404.description": "It seems like the page you're trying to access doesn't exist or has been moved. Please check the URL or navigate back to the homepage.",
+	"error.404.back_home": "Back to Home",
+	"error.404.back_previous": "Go Back"
 }
