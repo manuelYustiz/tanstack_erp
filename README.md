@@ -13,6 +13,7 @@ A modern ERP system built with Vite, React, TypeScript, Biome, and TanStack Rout
 - 📝 **TanStack Form** - Type-safe, performant forms for React
 - 🛠️ **Developer Tools** - Integrated devtools for Router, Query, and Form
 - 🌍 **Internationalization** - Multi-language support with FormatJS/react-intl
+- 🕒 **Day.js with Timezone Support** - Lightweight date library with comprehensive timezone handling
 - 📁 **Screaming Architecture** - Feature-based organization for better maintainability
 
 ## Architecture
@@ -170,6 +171,109 @@ src/shared/locales/
 └── es/
     └── messages.json
 ```
+
+## Date and Time Handling
+
+This project uses **Day.js** with comprehensive timezone support for all date and time operations.
+
+### Features
+
+- **Timezone-aware Formatting**: Automatic detection and handling of user timezones
+- **Multiple Format Options**: Date, DateTime, and relative time formatting
+- **Internationalization**: Date formats that respect locale preferences
+- **Lightweight**: Day.js is only 2kB minified, much lighter than Moment.js
+- **Timezone Persistence**: User timezone preferences are saved to localStorage
+
+### Usage
+
+#### Using the useFormatters Hook
+
+```tsx
+import { useFormatters } from './shared/hooks/useFormatters';
+
+function MyComponent() {
+  const { formatDate, formatDateTime, formatRelativeTime } = useFormatters();
+  
+  const now = new Date();
+  
+  return (
+    <div>
+      <p>Date: {formatDate(now)}</p>
+      <p>DateTime: {formatDateTime(now)}</p>
+      <p>Relative: {formatRelativeTime(now)}</p>
+    </div>
+  );
+}
+```
+
+#### Using Timezone-specific Formatting
+
+```tsx
+import { useFormatters } from './shared/hooks/useFormatters';
+
+function MyComponent() {
+  const { formatDateTime } = useFormatters('America/New_York');
+  
+  return <p>NYC Time: {formatDateTime(new Date())}</p>;
+}
+```
+
+#### Using Timezone Utilities Directly
+
+```tsx
+import dayjs, { 
+  formatDateWithTimezone, 
+  convertTimezone, 
+  getCurrentTimestamp,
+  COMMON_TIMEZONES 
+} from './shared/utils/dayjs';
+
+function TimezoneExample() {
+  const utcTime = dayjs().utc();
+  const nyTime = convertTimezone(utcTime, 'UTC', 'America/New_York');
+  const formatted = formatDateWithTimezone(new Date(), 'YYYY-MM-DD HH:mm:ss', 'Europe/Madrid');
+  
+  return (
+    <div>
+      <p>UTC: {utcTime.format()}</p>
+      <p>NY Time: {nyTime.format()}</p>
+      <p>Madrid Time: {formatted}</p>
+    </div>
+  );
+}
+```
+
+#### Managing User Timezone
+
+```tsx
+import { useTimezone } from './shared/hooks/useTimezone';
+import { COMMON_TIMEZONES } from './shared/utils/dayjs';
+
+function TimezoneSelector() {
+  const { timezone, setTimezone, detectedTimezone } = useTimezone();
+  
+  return (
+    <div>
+      <p>Current: {timezone}</p>
+      <p>Detected: {detectedTimezone}</p>
+      <select value={timezone} onChange={(e) => setTimezone(e.target.value)}>
+        {COMMON_TIMEZONES.map(({ value, label }) => (
+          <option key={value} value={value}>{label}</option>
+        ))}
+      </select>
+    </div>
+  );
+}
+```
+
+### Available Timezone Utilities
+
+- `getLocalTimezone()` - Detect user's timezone
+- `formatDateWithTimezone()` - Format date in specific timezone
+- `convertTimezone()` - Convert between timezones
+- `getCurrentTimestamp()` - Get current time in timezone
+- `isValidTimezone()` - Validate timezone string
+- `COMMON_TIMEZONES` - List of common timezones for UI
 
 ## Project Structure Benefits
 

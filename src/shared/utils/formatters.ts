@@ -1,3 +1,5 @@
+import dayjs, { getLocalTimezone } from "./dayjs";
+
 // Utility functions for formatting data
 export const formatCurrency = (
 	amount: number,
@@ -10,15 +12,40 @@ export const formatCurrency = (
 };
 
 export const formatDate = (
-	date: Date | string,
-	locale: string = "en-US"
+	date: Date | string | dayjs.Dayjs,
+	locale: string = "en-US",
+	timezone?: string
 ): string => {
-	const dateObj = typeof date === "string" ? new Date(date) : date;
-	return new Intl.DateTimeFormat(locale, {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	}).format(dateObj);
+	const tz = timezone || getLocalTimezone();
+	const dayjsDate = dayjs(date).tz(tz);
+
+	// Use dayjs with locale-aware formatting
+	if (locale.startsWith("es")) {
+		return dayjsDate.format("DD MMM YYYY");
+	}
+	return dayjsDate.format("MMM DD, YYYY");
+};
+
+export const formatDateTime = (
+	date: Date | string | dayjs.Dayjs,
+	locale: string = "en-US",
+	timezone?: string
+): string => {
+	const tz = timezone || getLocalTimezone();
+	const dayjsDate = dayjs(date).tz(tz);
+
+	if (locale.startsWith("es")) {
+		return dayjsDate.format("DD MMM YYYY HH:mm");
+	}
+	return dayjsDate.format("MMM DD, YYYY h:mm A");
+};
+
+export const formatRelativeTime = (
+	date: Date | string | dayjs.Dayjs,
+	timezone?: string
+): string => {
+	const tz = timezone || getLocalTimezone();
+	return dayjs(date).tz(tz).fromNow();
 };
 
 export const formatNumber = (num: number, locale: string = "en-US"): string => {
