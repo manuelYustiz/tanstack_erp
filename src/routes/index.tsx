@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useId } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useIntlContext } from "../shared/components/IntlProvider";
+import { TimezoneDemo } from "../shared/components/TimezoneDemo";
 import { Button } from "../shared/components/ui/button";
 import { Checkbox } from "../shared/components/ui/checkbox";
 import { useTheme } from "../shared/hooks/useTheme";
@@ -158,6 +159,9 @@ function Home() {
 						/>
 					</div>
 				</div>
+
+				{/* Timezone Demo */}
+				<TimezoneDemo />
 			</div>
 		</div>
 	);
