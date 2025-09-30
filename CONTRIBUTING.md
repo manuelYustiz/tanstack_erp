@@ -191,6 +191,109 @@ npm run format
 - Use **ICU MessageFormat** for complex formatting
 - Group related messages by feature
 
+## API Integration
+
+### Using Axios with TanStack Query
+
+This project uses **Axios** for HTTP requests and **TanStack Query** for data synchronization. When adding API integrations:
+
+1. **Use the configured axios client** from `src/shared/api`
+2. **Create service interfaces** for each feature following DIP
+3. **Integrate with TanStack Query** for caching and state management
+
+### Creating API Services
+
+Follow these steps when creating new API integrations:
+
+1. **Define types first** (ISP)
+   ```typescript
+   // features/example/types/index.ts
+   export interface ExampleItem {
+     id: string;
+     name: string;
+   }
+
+   export interface ExampleService {
+     getItems(): Promise<ExampleItem[]>;
+     createItem(item: Omit<ExampleItem, 'id'>): Promise<ExampleItem>;
+   }
+   ```
+
+2. **Implement the service** (DIP)
+   ```typescript
+   // features/example/services/exampleService.ts
+   import type { ApiClient } from '@/shared/api';
+   import type { ExampleService, ExampleItem } from '../types';
+
+   export const createExampleService = (apiClient: ApiClient): ExampleService => ({
+     async getItems() {
+       return apiClient.get<ExampleItem[]>('/examples');
+     },
+     
+     async createItem(item) {
+       return apiClient.post<ExampleItem>('/examples', item);
+     },
+   });
+   ```
+
+3. **Create React hooks** (SRP)
+   ```typescript
+   // features/example/hooks/useExample.ts
+   import { useQuery, useMutation } from '@tanstack/react-query';
+   import { createApiClient } from '@/shared/api';
+   import { createExampleService } from '../services/exampleService';
+
+   export const useExample = () => {
+     const service = createExampleService(createApiClient());
+
+     const { data: items, isLoading } = useQuery({
+       queryKey: ['examples'],
+       queryFn: () => service.getItems(),
+     });
+
+     const createMutation = useMutation({
+       mutationFn: service.createItem,
+     });
+
+     return {
+       items,
+       isLoading,
+       createItem: createMutation.mutate,
+     };
+   };
+   ```
+
+### API Best Practices
+
+- **Always use TypeScript types** for requests and responses
+- **Handle errors gracefully** using the provided error utilities
+- **Use TanStack Query** for data fetching (don't use `useEffect` for API calls)
+- **Invalidate queries** after mutations to keep data fresh
+- **Follow REST conventions** for endpoint naming
+- **Keep services pure** - no direct React dependencies in service files
+
+### Error Handling
+
+Use the provided error utilities for consistent error handling:
+
+```typescript
+import { getApiError, isAxiosError } from '@/shared/api';
+
+try {
+  const data = await apiClient.get('/endpoint');
+} catch (error) {
+  const apiError = getApiError(error);
+  console.error('API Error:', apiError.message);
+  
+  if (isAxiosError(error)) {
+    // Handle specific HTTP status codes
+    if (error.response?.status === 404) {
+      // Handle not found
+    }
+  }
+}
+```
+
 ## Testing
 
 ### Test Organization
@@ -282,6 +385,7 @@ export interface ExampleService {
 }
 
 // features/example/services/exampleService.ts (DIP)
+import type { ApiClient } from '@/shared/api';
 import type { ExampleService, ExampleItem } from '../types';
 
 export const createExampleService = (apiClient: ApiClient): ExampleService => ({

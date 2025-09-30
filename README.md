@@ -11,6 +11,7 @@ A modern ERP system built with Vite, React, TypeScript, Biome, and TanStack Rout
 - 🚦 **TanStack Router** - Type-safe routing with excellent developer experience
 - 🔄 **TanStack Query** - Powerful data synchronization for React
 - 📝 **TanStack Form** - Type-safe, performant forms for React
+- 🌐 **Axios** - Promise-based HTTP client for API requests
 - 🛠️ **Developer Tools** - Integrated devtools for Router, Query, and Form
 - 🌍 **Internationalization** - Multi-language support with FormatJS/react-intl
 - 🕒 **Day.js with Timezone Support** - Lightweight date library with comprehensive timezone handling
@@ -94,6 +95,212 @@ Format code:
 ```bash
 npm run format
 ```
+
+## API Integration with Axios and TanStack Query
+
+This project uses **Axios** as the HTTP client, fully integrated with **TanStack Query** for powerful data fetching and caching capabilities.
+
+### Features
+
+- **Configured Axios Client**: Pre-configured instance with interceptors
+- **Request Interceptors**: Automatic authentication token injection
+- **Response Interceptors**: Global error handling
+- **Type-safe API Client**: TypeScript interfaces for all API operations
+- **TanStack Query Ready**: Utilities designed to work seamlessly with TanStack Query
+- **Error Handling**: Comprehensive error extraction and handling utilities
+
+### Basic Usage
+
+#### Using the API Client Directly
+
+```tsx
+import { apiClient } from './shared/api';
+
+// GET request
+const response = await apiClient.get('/users');
+const users = response.data;
+
+// POST request
+const response = await apiClient.post('/users', { name: 'John Doe' });
+const newUser = response.data;
+```
+
+#### Using with TanStack Query
+
+```tsx
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { apiClient } from './shared/api';
+
+function UsersList() {
+  // Fetch users with TanStack Query
+  const { data: users, isLoading } = useQuery({
+    queryKey: ['users'],
+    queryFn: async () => {
+      const response = await apiClient.get('/users');
+      return response.data;
+    },
+  });
+
+  // Create user mutation
+  const createUser = useMutation({
+    mutationFn: async (userData) => {
+      const response = await apiClient.post('/users', userData);
+      return response.data;
+    },
+  });
+
+  if (isLoading) return <div>Loading...</div>;
+
+  return (
+    <div>
+      {users?.map(user => <div key={user.id}>{user.name}</div>)}
+    </div>
+  );
+}
+```
+
+#### Using the Helper API Client
+
+The helper API client automatically extracts data from responses:
+
+```tsx
+import { createApiClient } from './shared/api';
+
+const api = createApiClient();
+
+// Data is automatically extracted
+const users = await api.get<User[]>('/users');
+const newUser = await api.post<User>('/users', { name: 'John Doe' });
+```
+
+#### Error Handling
+
+```tsx
+import { getApiError, isAxiosError } from './shared/api';
+import { useMutation } from '@tanstack/react-query';
+
+function CreateUserForm() {
+  const createUser = useMutation({
+    mutationFn: async (userData) => {
+      const response = await apiClient.post('/users', userData);
+      return response.data;
+    },
+    onError: (error) => {
+      const apiError = getApiError(error);
+      console.error('Error creating user:', apiError.message);
+      
+      if (isAxiosError(error) && error.response?.status === 409) {
+        // Handle conflict error
+        alert('User already exists');
+      }
+    },
+  });
+
+  // ... rest of component
+}
+```
+
+### Creating Feature Services
+
+Following the Dependency Inversion Principle, create service interfaces for each feature:
+
+```tsx
+// features/users/types/index.ts
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
+export interface UserService {
+  getUsers(): Promise<User[]>;
+  getUserById(id: string): Promise<User>;
+  createUser(user: Omit<User, 'id'>): Promise<User>;
+  updateUser(id: string, user: Partial<User>): Promise<User>;
+  deleteUser(id: string): Promise<void>;
+}
+
+// features/users/services/userService.ts
+import type { ApiClient } from '@/shared/api';
+import type { User, UserService } from '../types';
+
+export const createUserService = (apiClient: ApiClient): UserService => ({
+  async getUsers() {
+    return apiClient.get<User[]>('/users');
+  },
+  
+  async getUserById(id: string) {
+    return apiClient.get<User>(`/users/${id}`);
+  },
+  
+  async createUser(user: Omit<User, 'id'>) {
+    return apiClient.post<User>('/users', user);
+  },
+  
+  async updateUser(id: string, user: Partial<User>) {
+    return apiClient.patch<User>(`/users/${id}`, user);
+  },
+  
+  async deleteUser(id: string) {
+    return apiClient.delete<void>(`/users/${id}`);
+  },
+});
+
+// features/users/hooks/useUsers.ts
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { createApiClient } from '@/shared/api';
+import { createUserService } from '../services/userService';
+
+export const useUsers = () => {
+  const queryClient = useQueryClient();
+  const userService = createUserService(createApiClient());
+
+  const { data: users, isLoading } = useQuery({
+    queryKey: ['users'],
+    queryFn: () => userService.getUsers(),
+  });
+
+  const createUser = useMutation({
+    mutationFn: userService.createUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['users'] });
+    },
+  });
+
+  return {
+    users,
+    isLoading,
+    createUser: createUser.mutate,
+    isCreating: createUser.isPending,
+  };
+};
+```
+
+### Configuration
+
+Set your API base URL using environment variables:
+
+```env
+VITE_API_BASE_URL=https://api.example.com
+```
+
+If not set, the default is `/api`.
+
+### API Client Configuration
+
+The axios client is configured with:
+- **Base URL**: From `VITE_API_BASE_URL` environment variable or `/api`
+- **Timeout**: 10 seconds
+- **Headers**: `Content-Type: application/json`
+- **Auth Token**: Automatically added from localStorage if available
+
+### Available Utilities
+
+- `apiClient` - Configured axios instance
+- `createApiClient()` - Helper client that auto-extracts response data
+- `getApiError(error)` - Extract structured error information
+- `getErrorMessage(error)` - Get simple error message string
+- `isAxiosError(error)` - Type guard for axios errors
 
 ## Internationalization (i18n)
 
