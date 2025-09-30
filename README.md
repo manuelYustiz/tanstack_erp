@@ -302,6 +302,10 @@ The axios client is configured with:
 - `getErrorMessage(error)` - Get simple error message string
 - `isAxiosError(error)` - Type guard for axios errors
 
+### Complete Example
+
+For a complete, working example of using Axios with TanStack Query, including a full CRUD implementation, see [AXIOS_EXAMPLE.md](./AXIOS_EXAMPLE.md).
+
 ## Internationalization (i18n)
 
 This project includes comprehensive internationalization support using FormatJS (react-intl).
@@ -501,6 +505,7 @@ function TimezoneSelector() {
 - **TanStack Router**: Type-safe routing with excellent developer experience
 - **TanStack Query**: Powerful data synchronization and caching for React applications
 - **TanStack Form**: Type-safe, performant forms with built-in validation
+- **Axios**: Reliable, promise-based HTTP client with interceptors and TypeScript support
 - **FormatJS (react-intl)**: Industry-standard internationalization library with powerful formatting capabilities
 - **Vite**: Significantly faster than Create React App for development and builds
 - **Full TanStack DevTools**: Integrated debugging tools for Router, Query, and Form
