@@ -1,4 +1,4 @@
-export { apiClient } from "./client";
+export { apiClient, byteCounter } from "./client";
 export {
 	createApiClient,
 	getApiError,
