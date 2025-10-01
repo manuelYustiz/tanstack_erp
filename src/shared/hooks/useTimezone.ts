@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getLocalTimezone, isValidTimezone } from "../utils/dayjs";
+import { getLocalTimezone, isValidTimezone } from "../utils/date";
 
 const TIMEZONE_STORAGE_KEY = "app-timezone";
 
