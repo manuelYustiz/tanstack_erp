@@ -96,7 +96,11 @@ export function ByteCounterDemo() {
 			</div>
 
 			<div className="flex flex-wrap gap-3">
-				<Button onClick={handleTestRequest} disabled={loading} variant="default">
+				<Button
+					onClick={handleTestRequest}
+					disabled={loading}
+					variant="default"
+				>
 					{loading ? "Testing..." : "Test API Request"}
 				</Button>
 				<Button onClick={updateStats} variant="outline">
