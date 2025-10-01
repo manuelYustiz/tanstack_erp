@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useId } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { ByteCounterDemo } from "../shared/components/ByteCounterDemo";
 import { useIntlContext } from "../shared/components/IntlProvider";
 import { TimezoneDemo } from "../shared/components/TimezoneDemo";
 import { Button } from "../shared/components/ui/button";
@@ -162,6 +163,11 @@ function Home() {
 
 				{/* Timezone Demo */}
 				<TimezoneDemo />
+
+				{/* Byte Counter Demo */}
+				<div className="mt-8">
+					<ByteCounterDemo />
+				</div>
 			</div>
 		</div>
 	);
