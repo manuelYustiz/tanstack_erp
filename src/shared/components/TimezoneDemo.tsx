@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useFormatters } from "../hooks/useFormatters";
 import { useTimezone } from "../hooks/useTimezone";
-import { COMMON_TIMEZONES } from "../utils/dayjs";
+import { COMMON_TIMEZONES } from "../utils/date";
 
 export function TimezoneDemo() {
 	const { timezone, setTimezone, detectedTimezone } = useTimezone();

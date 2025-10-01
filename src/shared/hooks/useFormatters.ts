@@ -1,14 +1,13 @@
 import type dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
-import { getLocalTimezone } from "../utils/dayjs";
 import {
-	formatCurrency,
 	formatDate,
 	formatDateTime,
-	formatNumber,
 	formatRelativeTime,
-} from "../utils/formatters";
+	getLocalTimezone,
+} from "../utils/date";
+import { formatCurrency, formatNumber } from "../utils/formatters";
 
 export function useFormatters(timezone?: string) {
 	const intl = useIntl();
