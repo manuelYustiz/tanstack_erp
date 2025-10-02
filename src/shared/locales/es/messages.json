@@ -19,5 +19,20 @@
 	"error.404.subtitle": "La página que buscas no existe",
 	"error.404.description": "Parece que la página a la que intentas acceder no existe o ha sido movida. Por favor, verifica la URL o navega de vuelta a la página principal.",
 	"error.404.back_home": "Volver al Inicio",
-	"error.404.back_previous": "Volver Atrás"
+	"error.404.back_previous": "Volver Atrás",
+	"nav.home": "Inicio",
+	"nav.dashboard": "Panel de Control",
+	"nav.test": "Componentes de Prueba",
+	"nav.users": "Usuarios",
+	"nav.toggleMenu": "Alternar menú",
+	"nav.toggleTheme": "Cambiar tema",
+	"test.title": "Página de Componentes de Prueba",
+	"test.description": "Esta página demuestra varios componentes de UI disponibles en la aplicación",
+	"test.button.section": "Botones",
+	"test.card.section": "Tarjetas",
+	"test.badge.section": "Insignias",
+	"test.separator.section": "Separador",
+	"test.collapsible.section": "Colapsable",
+	"test.collapsible.trigger": "Alternar contenido",
+	"test.collapsible.content": "Este es el contenido colapsable que puede mostrarse u ocultarse."
 }

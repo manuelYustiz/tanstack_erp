@@ -4,11 +4,14 @@ import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtoolsPanel } from "@tanstack/router-devtools";
 import { NotFound } from "../shared/components/NotFound";
+import { MainLayout } from "../shared/layouts/MainLayout";
 
 export const Route = createRootRoute({
 	component: () => (
 		<>
-			<Outlet />
+			<MainLayout>
+				<Outlet />
+			</MainLayout>
 			<TanStackDevtools
 				plugins={[
 					{

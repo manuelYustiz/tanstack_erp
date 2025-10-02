@@ -19,5 +19,20 @@
 	"error.404.subtitle": "The page you are looking for does not exist",
 	"error.404.description": "It seems like the page you're trying to access doesn't exist or has been moved. Please check the URL or navigate back to the homepage.",
 	"error.404.back_home": "Back to Home",
-	"error.404.back_previous": "Go Back"
+	"error.404.back_previous": "Go Back",
+	"nav.home": "Home",
+	"nav.dashboard": "Dashboard",
+	"nav.test": "Test Components",
+	"nav.users": "Users",
+	"nav.toggleMenu": "Toggle menu",
+	"nav.toggleTheme": "Toggle theme",
+	"test.title": "Test Components Page",
+	"test.description": "This page demonstrates various UI components available in the application",
+	"test.button.section": "Buttons",
+	"test.card.section": "Cards",
+	"test.badge.section": "Badges",
+	"test.separator.section": "Separator",
+	"test.collapsible.section": "Collapsible",
+	"test.collapsible.trigger": "Toggle content",
+	"test.collapsible.content": "This is the collapsible content that can be shown or hidden."
 }
