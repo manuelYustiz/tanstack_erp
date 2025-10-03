@@ -18,11 +18,18 @@ export const AuthPage = () => {
 			password: "",
 		},
 		onSubmit: async ({ value }) => {
+			// Validate with Zod schema before submission
+			const result = loginFormSchema.safeParse(value);
+			if (!result.success) {
+				console.error("Validation failed:", result.error);
+				return;
+			}
+
 			// Handle login submission
-			console.log("Login credentials:", value);
+			console.log("Login credentials:", result.data);
 			// TODO: Implement actual authentication logic
 			// This would typically call an API endpoint to authenticate the user
-			alert(`Logging in with username: ${value.username}`);
+			alert(`Logging in with username: ${result.data.username}`);
 		},
 	});
 
@@ -49,7 +56,13 @@ export const AuthPage = () => {
 						<form.Field
 							name="username"
 							validators={{
-								onChange: loginFormSchema.username.validators.onChange,
+								onChange: ({ value }) => {
+									const result =
+										loginFormSchema.shape.username.safeParse(value);
+									return result.success
+										? undefined
+										: result.error.issues[0]?.message;
+								},
 							}}
 						>
 							{(field) => (
@@ -76,7 +89,13 @@ export const AuthPage = () => {
 						<form.Field
 							name="password"
 							validators={{
-								onChange: loginFormSchema.password.validators.onChange,
+								onChange: ({ value }) => {
+									const result =
+										loginFormSchema.shape.password.safeParse(value);
+									return result.success
+										? undefined
+										: result.error.issues[0]?.message;
+								},
 							}}
 						>
 							{(field) => (
