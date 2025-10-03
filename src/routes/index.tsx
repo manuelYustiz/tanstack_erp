@@ -6,6 +6,7 @@ import { useIntlContext } from "../shared/components/IntlProvider";
 import { TimezoneDemo } from "../shared/components/TimezoneDemo";
 import { Button } from "../shared/components/ui/button";
 import { Checkbox } from "../shared/components/ui/checkbox";
+import { useMeta } from "../shared/hooks/useMeta";
 import { useTheme } from "../shared/hooks/useTheme";
 import { AVAILABLE_LOCALES, type SupportedLocale } from "../shared/i18n";
 
@@ -18,6 +19,26 @@ function Home() {
 	const { locale, setLocale } = useIntlContext();
 	const intl = useIntl();
 	const darkModeId = useId();
+
+	// Set dynamic meta tags for the home page
+	useMeta({
+		title: "TanStack ERP - Home",
+		description: intl.formatMessage({ id: "app.description" }),
+		keywords: "ERP, TanStack, React, TypeScript, Vite, Router, Modern ERP",
+		author: "TanStack ERP Team",
+		// Open Graph tags (Facebook, LinkedIn, Discord)
+		ogTitle: "TanStack ERP - Modern ERP System",
+		ogDescription: intl.formatMessage({ id: "app.description" }),
+		ogImage: "https://tanstack-erp.com/og-home.jpg",
+		ogUrl: window.location.href,
+		ogType: "website",
+		ogSiteName: "TanStack ERP",
+		// Twitter Card tags
+		twitterCard: "summary_large_image",
+		twitterTitle: "TanStack ERP - Modern ERP System",
+		twitterDescription: intl.formatMessage({ id: "app.description" }),
+		twitterImage: "https://tanstack-erp.com/twitter-home.jpg",
+	});
 
 	return (
 		<div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">

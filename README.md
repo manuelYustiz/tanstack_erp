@@ -532,9 +532,95 @@ This project includes shared VSCode configuration for consistent development exp
 - `.vscode/tasks.json`: Predefined tasks for development commands
 - `.vscode/launch.json`: Debug configuration for Chrome
 
+## Dynamic Meta Tags for SEO and Social Media
+
+The application supports dynamic meta tags that update per route, optimized for SEO and social media sharing (Facebook, Twitter, LinkedIn, Discord, etc.).
+
+### Features
+
+- **Dynamic Title Updates**: Each route can set its own page title
+- **SEO Meta Tags**: Description, keywords, and author tags
+- **Open Graph Tags**: For Facebook, LinkedIn, and Discord sharing
+- **Twitter Card Tags**: For Twitter sharing
+- **Automatic Cleanup**: Meta tags are automatically removed when navigating away
+
+### Usage
+
+Use the `useMeta` hook in any route component:
+
+```tsx
+import { createFileRoute } from "@tanstack/react-router";
+import { useMeta } from "../shared/hooks/useMeta";
+
+export const Route = createFileRoute("/about")({
+  component: About,
+});
+
+function About() {
+  // Set dynamic meta tags for this route
+  useMeta({
+    title: "About Us - TanStack ERP",
+    description: "Learn more about TanStack ERP",
+    keywords: "About, ERP, TanStack",
+    author: "TanStack ERP Team",
+    
+    // Open Graph tags (Facebook, LinkedIn, Discord)
+    ogTitle: "About TanStack ERP",
+    ogDescription: "Learn more about our modern ERP system",
+    ogImage: "https://example.com/og-image.jpg",
+    ogUrl: window.location.href,
+    ogType: "website",
+    ogSiteName: "TanStack ERP",
+    
+    // Twitter Card tags
+    twitterCard: "summary_large_image",
+    twitterTitle: "About TanStack ERP",
+    twitterDescription: "Learn more about our modern ERP system",
+    twitterImage: "https://example.com/twitter-image.jpg",
+  });
+
+  return (
+    <div>
+      <h1>About Us</h1>
+    </div>
+  );
+}
+```
+
+### Available Options
+
+The `useMeta` hook accepts the following configuration:
+
+**Standard Meta Tags:**
+- `title`: Page title (appears in browser tab)
+- `description`: Page description for SEO
+- `keywords`: Keywords for SEO
+- `author`: Content author
+
+**Open Graph Tags** (Facebook, LinkedIn, Discord):
+- `ogTitle`: Title for social media share
+- `ogDescription`: Description for social media share
+- `ogImage`: Image URL for social media share
+- `ogUrl`: Canonical URL
+- `ogType`: Content type (e.g., "website", "article")
+- `ogSiteName`: Site name
+
+**Twitter Card Tags:**
+- `twitterCard`: Card type (e.g., "summary_large_image")
+- `twitterTitle`: Title for Twitter share
+- `twitterDescription`: Description for Twitter share
+- `twitterImage`: Image URL for Twitter share
+- `twitterSite`: Twitter handle of the site
+- `twitterCreator`: Twitter handle of the content creator
+
+### Default Meta Tags
+
+Default meta tags are defined in `index.html` and will be used as fallback when a route doesn't specify custom meta tags.
+
 ## Routes
 
 - `/` - Home page with project overview
+- `/about` - About page (example with custom meta tags)
 - `/dashboard` - Main dashboard with statistics
 - `/users` - User management interface
 - `/products` - Product management interface
