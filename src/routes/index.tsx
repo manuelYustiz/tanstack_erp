@@ -1,13 +1,12 @@
+import { useThemeContext } from "@radix-ui/themes";
 import { createFileRoute } from "@tanstack/react-router";
-import { useId } from "react";
+import { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { ByteCounterDemo } from "../shared/components/ByteCounterDemo";
 import { useIntlContext } from "../shared/components/IntlProvider";
 import { TimezoneDemo } from "../shared/components/TimezoneDemo";
 import { Button } from "../shared/components/ui/button";
-import { Checkbox } from "../shared/components/ui/checkbox";
 import { useMeta } from "../shared/hooks/useMeta";
-import { useTheme } from "../shared/hooks/useTheme";
 import { AVAILABLE_LOCALES, type SupportedLocale } from "../shared/i18n";
 
 export const Route = createFileRoute("/")({
@@ -15,10 +14,26 @@ export const Route = createFileRoute("/")({
 });
 
 function Home() {
-	const { theme, mode, toggleTheme, toggleMode } = useTheme();
+	// const { theme, mode, toggleTheme, toggleMode } = useTheme();
 	const { locale, setLocale } = useIntlContext();
 	const intl = useIntl();
-	const darkModeId = useId();
+	const {
+		appearance,
+		onAppearanceChange,
+		accentColor,
+		onAccentColorChange,
+		...rest
+	} = useThemeContext();
+
+	console.log(rest);
+
+	const toggleMode = useCallback(() => {
+		onAppearanceChange(appearance === "dark" ? "light" : "dark");
+	}, [appearance, onAppearanceChange]);
+
+	const toggleTheme = useCallback(() => {
+		onAccentColorChange(accentColor === "indigo" ? "violet" : "indigo");
+	}, [accentColor, onAccentColorChange]);
 
 	// Set dynamic meta tags for the home page
 	useMeta({
@@ -113,7 +128,7 @@ function Home() {
 								Primary Theme
 							</h4>
 							<p className="text-theme-primary-600">
-								Current theme: {theme === "theme-1" ? "Blue" : "Green"}
+								Current theme: {accentColor}
 							</p>
 						</div>
 						<div className="bg-theme-secondary-100 p-4 rounded-lg border border-theme-secondary-200">
@@ -129,7 +144,7 @@ function Home() {
 								Dark Mode
 							</h4>
 							<p className="text-gray-600 dark:text-gray-300">
-								Current mode: {mode}
+								Current mode: {appearance}
 							</p>
 						</div>
 					</div>
@@ -142,29 +157,15 @@ function Home() {
 					</h3>
 					<div className="flex flex-wrap gap-4 items-center">
 						<Button onClick={toggleTheme} variant="default">
-							Switch to {theme === "theme-1" ? "Green" : "Blue"} Theme
+							Switch to {accentColor === "indigo" ? "Violeta" : "indigo"} Theme
 						</Button>
-
-						<div className="flex items-center space-x-2">
-							<Checkbox
-								id={darkModeId}
-								checked={mode === "dark"}
-								onChange={toggleMode}
-							/>
-							<label
-								htmlFor={darkModeId}
-								className="text-sm text-gray-700 dark:text-gray-300 cursor-pointer"
-							>
-								Enable Dark Mode
-							</label>
-						</div>
 
 						<Button onClick={toggleMode} variant="outline">
 							<FormattedMessage
 								id="theme.toggle"
 								values={{
 									mode: intl.formatMessage({
-										id: mode === "light" ? "common.dark" : "common.light",
+										id: appearance === "light" ? "common.dark" : "common.light",
 									}),
 								}}
 							/>
@@ -175,8 +176,8 @@ function Home() {
 						<FormattedMessage
 							id="theme.current"
 							values={{
-								theme,
-								mode,
+								theme: accentColor,
+								mode: appearance,
 							}}
 						/>
 					</div>

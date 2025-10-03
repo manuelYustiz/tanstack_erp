@@ -17,6 +17,7 @@ package-lock.json
 # Allow sharing VSCode settings for project configuration
 # .vscode/*
 # !.vscode/extensions.json
+.tanstack
 .idea
 .DS_Store
 *.suo

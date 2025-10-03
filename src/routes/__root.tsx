@@ -1,3 +1,4 @@
+import { Theme } from "@radix-ui/themes";
 import { TanStackDevtools } from "@tanstack/react-devtools";
 import { FormDevtoolsPlugin } from "@tanstack/react-form-devtools";
 import { ReactQueryDevtoolsPanel } from "@tanstack/react-query-devtools";
@@ -8,7 +9,9 @@ import { NotFound } from "../shared/components/NotFound";
 export const Route = createRootRoute({
 	component: () => (
 		<>
-			<Outlet />
+			<Theme>
+				<Outlet />
+			</Theme>
 			<TanStackDevtools
 				plugins={[
 					{

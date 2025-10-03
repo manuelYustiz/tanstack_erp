@@ -4,7 +4,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { routeTree } from "./routeTree.gen";
 import { IntlProvider } from "./shared/components/IntlProvider";
-import "./shared/styles/globals.css";
+import "@radix-ui/themes/styles.css";
 
 // Create a new router instance
 const router = createRouter({ routeTree });

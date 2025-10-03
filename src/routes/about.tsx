@@ -1,5 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { FormattedMessage } from "react-intl";
+import { createFileRoute } from "@tanstack/react-router"
+import {
+	Button,
+	Card,
+	Flex,
+	Grid,
+	Heading,
+	Text,
+	TextArea,
+	Theme,
+} from "@radix-ui/themes";
 import { useMeta } from "../shared/hooks/useMeta";
 
 export const Route = createFileRoute("/about")({
@@ -29,37 +38,60 @@ function About() {
 		twitterDescription:
 			"Learn more about TanStack ERP, a modern ERP system built with cutting-edge technologies.",
 		twitterImage: "https://tanstack-erp.com/twitter-about.jpg",
-	});
+	})
 
 	return (
-		<div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
-			<div className="container mx-auto p-8">
-				<h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-					<FormattedMessage id="about.title" defaultMessage="About Us" />
-				</h1>
+		<Card size="2">
+			<Flex gap="6">
+				<Flex direction="column" gap="3">
+					<Heading as="h5" size="2">
+						Global
+					</Heading>
+					<Grid gap="1">
+						<Text as="div" weight="bold" size="2" mb="1">
+							Feedback
+						</Text>
+						<TextArea placeholder="Write your feedback…" />
+					</Grid>
+					<Button>Send</Button>
+				</Flex>
 
-				<p className="text-lg text-gray-700 dark:text-gray-300 mb-8 max-w-2xl">
-					<FormattedMessage
-						id="about.description"
-						defaultMessage="TanStack ERP is a modern enterprise resource planning system built with the latest web technologies."
-					/>
-				</p>
+				<Theme accentColor="cyan" radius="full">
+					<Card size="2">
+						<Flex gap="6">
+							<Flex direction="column" gap="3">
+								<Heading as="h5" size="2">
+									Child
+								</Heading>
+								<Grid gap="1">
+									<Text as="div" weight="bold" size="2" mb="1">
+										Feedback
+									</Text>
+									<TextArea placeholder="Write your feedback…" />
+								</Grid>
+								<Button>Send</Button>
+							</Flex>
 
-				<div className="mt-8">
-					<h2 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-						<FormattedMessage
-							id="about.mission.title"
-							defaultMessage="Our Mission"
-						/>
-					</h2>
-					<p className="text-gray-700 dark:text-gray-300">
-						<FormattedMessage
-							id="about.mission.description"
-							defaultMessage="To provide a modern, efficient, and user-friendly ERP solution for businesses of all sizes."
-						/>
-					</p>
-				</div>
-			</div>
-		</div>
-	);
+							<Theme accentColor="orange">
+								<Card size="2">
+									<Flex direction="column" gap="3">
+										<Heading as="h5" size="2">
+											Grandchild
+										</Heading>
+										<Grid gap="1">
+											<Text as="div" weight="bold" size="2" mb="1">
+												Feedback
+											</Text>
+											<TextArea placeholder="Write your feedback…" />
+										</Grid>
+										<Button>Send</Button>
+									</Flex>
+								</Card>
+							</Theme>
+						</Flex>
+					</Card>
+				</Theme>
+			</Flex>
+		</Card>
+	)
 }
