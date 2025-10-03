@@ -13,6 +13,13 @@ import { FormattedMessage } from "react-intl";
 import { useIntlContext } from "../components/IntlProvider";
 import { Button } from "../components/ui/button";
 import {
+	Select,
+	SelectContent,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
+} from "../components/ui/select";
+import {
 	Sheet,
 	SheetContent,
 	SheetHeader,
@@ -98,17 +105,18 @@ export function MainLayout({ children }: MainLayoutProps) {
 					{/* Header controls */}
 					<div className="flex items-center gap-2">
 						{/* Language switcher */}
-						<select
-							value={locale}
-							onChange={(e) => setLocale(e.target.value as SupportedLocale)}
-							className="px-2 py-1 text-sm border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
-						>
-							{AVAILABLE_LOCALES.map((lang) => (
-								<option key={lang.code} value={lang.code}>
-									{lang.name}
-								</option>
-							))}
-						</select>
+						<Select value={locale} onValueChange={(value) => setLocale(value as SupportedLocale)}>
+							<SelectTrigger className="w-[120px] h-9">
+								<SelectValue placeholder="Language" />
+							</SelectTrigger>
+							<SelectContent>
+								{AVAILABLE_LOCALES.map((lang) => (
+									<SelectItem key={lang.code} value={lang.code}>
+										{lang.name}
+									</SelectItem>
+								))}
+							</SelectContent>
+						</Select>
 
 						{/* Theme toggle */}
 						<Button variant="outline" size="icon" onClick={toggleMode}>
