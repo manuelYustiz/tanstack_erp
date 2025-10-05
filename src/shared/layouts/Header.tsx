@@ -1,4 +1,5 @@
-import { Moon, Sun, User, Settings, LogOut, Menu } from "lucide-react";
+import { LogOut, Menu, Moon, Settings, Sun, User } from "lucide-react";
+import { useTheme } from "../components/ThemeProvider";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar";
 import { Button } from "../components/ui/button";
 import {
@@ -9,7 +10,6 @@ import {
 	DropdownMenuSeparator,
 	DropdownMenuTrigger,
 } from "../components/ui/dropdown-menu";
-import { useTheme } from "../components/ThemeProvider";
 
 interface HeaderProps {
 	onMenuClick?: () => void;
