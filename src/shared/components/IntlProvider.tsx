@@ -20,7 +20,12 @@ export function IntlProvider({ children }: IntlProviderProps) {
 
 	return (
 		<IntlContext.Provider value={{ locale, setLocale }}>
-			<ReactIntlProvider locale={locale} messages={messages} defaultLocale="en">
+			<ReactIntlProvider
+				key={locale}
+				locale={locale}
+				messages={messages}
+				defaultLocale="en"
+			>
 				{children}
 			</ReactIntlProvider>
 		</IntlContext.Provider>
