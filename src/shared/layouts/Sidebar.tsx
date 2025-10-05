@@ -1,17 +1,17 @@
-import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 import {
-	Home,
-	Users,
-	ShoppingCart,
 	BarChart3,
-	Settings,
 	ChevronDown,
 	ChevronRight,
-	Package,
-	FileText,
 	DollarSign,
+	FileText,
+	Home,
+	Package,
+	Settings,
+	ShoppingCart,
+	Users,
 } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { Button } from "../components/ui/button";
 import {
 	Collapsible,

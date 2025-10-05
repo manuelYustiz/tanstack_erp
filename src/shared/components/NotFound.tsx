@@ -1,9 +1,13 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useParams } from "@tanstack/react-router";
 import { ArrowLeft, Home } from "lucide-react";
 import { FormattedMessage } from "react-intl";
+import type { SupportedLocale } from "../i18n";
 import { Button } from "./ui/button";
 
 export function NotFound() {
+	const params = useParams({ strict: false }) as { lang?: SupportedLocale };
+	const lang = params.lang || "en";
+
 	const handleGoBack = () => {
 		window.history.back();
 	};
@@ -36,7 +40,7 @@ export function NotFound() {
 				{/* Action Buttons */}
 				<div className="flex flex-col sm:flex-row gap-4 justify-center">
 					<Button asChild className="flex items-center gap-2">
-						<Link to="/">
+						<Link to="/$lang" params={{ lang }}>
 							<Home className="w-4 h-4" />
 							<FormattedMessage id="error.404.back_home" />
 						</Link>
