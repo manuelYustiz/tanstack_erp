@@ -8,7 +8,7 @@ import {
 	CollapsibleContent,
 	CollapsibleTrigger,
 } from "../components/ui/collapsible";
-import { cn } from "../utils/cn";
+import { cn } from "../utils";
 
 interface SidebarProps {
 	className?: string;

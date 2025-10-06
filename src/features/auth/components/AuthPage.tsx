@@ -34,17 +34,10 @@ export const AuthPage = () => {
 	});
 
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 py-12">
-			<Card className="w-full max-w-md">
-				<CardHeader className="space-y-1">
-					<CardTitle className="text-3xl font-bold text-center">
-						Login
-					</CardTitle>
-					<CardDescription className="text-center">
-						Enter your username and password to access your account
-					</CardDescription>
-				</CardHeader>
-				<CardContent>
+
+    <div className="bg-background flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
+      <div className="w-full max-w-sm">
+
 					<form
 						onSubmit={(e) => {
 							e.preventDefault();
@@ -133,8 +126,8 @@ export const AuthPage = () => {
 							)}
 						</form.Subscribe>
 					</form>
-				</CardContent>
-			</Card>
-		</div>
+      </div>
+    </div>
+
 	);
 };

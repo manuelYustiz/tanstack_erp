@@ -1,7 +1,7 @@
 import { createContext, type ReactNode, useContext } from "react";
 import { IntlProvider as ReactIntlProvider } from "react-intl";
 import { useLocale } from "../hooks/useLocale";
-import { getMessages, type SupportedLocale } from "../i18n";
+import { getMessages, type SupportedLocale } from "../utils/i18n";
 
 interface IntlContextValue {
 	locale: SupportedLocale;

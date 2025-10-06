@@ -1,7 +1,7 @@
 import { Link, useParams } from "@tanstack/react-router";
 import { ArrowLeft, Home } from "lucide-react";
 import { FormattedMessage } from "react-intl";
-import type { SupportedLocale } from "../i18n";
+import type { SupportedLocale } from "../utils/i18n";
 import { Button } from "./ui/button";
 
 export function NotFound() {

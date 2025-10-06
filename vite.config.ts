@@ -5,7 +5,10 @@ import { defineConfig } from "vite";
 
 // https://vite.dev/config/
 export default defineConfig({
-	plugins: [react(), TanStackRouterVite()],
+	plugins: [
+		react(),
+		TanStackRouterVite(),
+	],
 	resolve: {
 		alias: {
 			"@": fileURLToPath(new URL("./src", import.meta.url)),

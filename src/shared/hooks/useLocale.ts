@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getDefaultLocale, type SupportedLocale } from "../i18n";
+import { getDefaultLocale, type SupportedLocale } from "../utils/i18n";
 
 const LOCALE_STORAGE_KEY = "app-locale";
 

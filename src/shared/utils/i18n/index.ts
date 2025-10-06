@@ -1,6 +1,6 @@
 // Import message files
-import enMessages from "../locales/en/messages.json";
-import esMessages from "../locales/es/messages.json";
+import enMessages from "@/shared/locales/en/messages.json";
+import esMessages from "@/shared/locales/es/messages.json";
 
 // Supported locales
 export type SupportedLocale = "en" | "es";
