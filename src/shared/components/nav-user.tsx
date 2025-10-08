@@ -1,6 +1,8 @@
 import {
   BadgeCheck,
   Bell,
+  ChevronsUpDown,
+  CreditCard,
   LogOut,
   Sparkles,
 } from "lucide-react"
@@ -25,7 +27,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/shared/components/ui/sidebar"
-import { CaretSortIcon, ComponentPlaceholderIcon } from "@radix-ui/react-icons"
 
 export function NavUser({
   user,
@@ -55,7 +56,7 @@ export function NavUser({
                 <span className="truncate font-semibold">{user.name}</span>
                 <span className="truncate text-xs">{user.email}</span>
               </div>
-              <CaretSortIcon className="ml-auto size-4" />
+              <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
           <DropdownMenuContent
@@ -90,7 +91,7 @@ export function NavUser({
                 Account
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <ComponentPlaceholderIcon />
+                <CreditCard />
                 Billing
               </DropdownMenuItem>
               <DropdownMenuItem>

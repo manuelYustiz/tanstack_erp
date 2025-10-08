@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 
-import { AppSidebar } from "../components/app-sidebar";
+import { AppSidebar } from "../shared/components/app-sidebar";
 import {
 	Breadcrumb,
 	BreadcrumbItem,
@@ -8,13 +8,13 @@ import {
 	BreadcrumbList,
 	BreadcrumbPage,
 	BreadcrumbSeparator,
-} from "../components/ui/breadcrumb";
-import { Separator } from "../components/ui/separator";
+} from "../shared/components/ui/breadcrumb";
+import { Separator } from "../shared/components/ui/separator";
 import {
 	SidebarInset,
 	SidebarProvider,
 	SidebarTrigger,
-} from "../components/ui/sidebar";
+} from "../shared/components/ui/sidebar";
 
 export const Route = createFileRoute("/$lang/test")({
 	component: TestPage,
