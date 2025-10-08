@@ -1,7 +1,7 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { useIntlContext } from "../shared/components/IntlProvider";
-import type { SupportedLocale } from "../shared/i18n";
+import type { SupportedLocale } from "../shared/utils/i18n";
 
 // Validate if the lang parameter is a valid locale
 function isValidLocale(lang: string): lang is SupportedLocale {

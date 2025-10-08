@@ -3,6 +3,7 @@
 import {
   Folder,
   Forward,
+  MoreHorizontal,
   Trash2,
   type LucideIcon,
 } from "lucide-react"
@@ -23,7 +24,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/shared/components/ui/sidebar"
-import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 
 export function NavProjects({
   projects,
@@ -51,7 +51,7 @@ export function NavProjects({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <SidebarMenuAction showOnHover>
-                  <DotsHorizontalIcon />
+                  <MoreHorizontal />
                   <span className="sr-only">More</span>
                 </SidebarMenuAction>
               </DropdownMenuTrigger>
@@ -79,7 +79,7 @@ export function NavProjects({
         ))}
         <SidebarMenuItem>
           <SidebarMenuButton className="text-sidebar-foreground/70">
-            <DotsHorizontalIcon className="text-sidebar-foreground/70" />
+            <MoreHorizontal className="text-sidebar-foreground/70" />
             <span>More</span>
           </SidebarMenuButton>
         </SidebarMenuItem>
