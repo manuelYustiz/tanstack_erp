@@ -13,6 +13,7 @@ import { Route as LangRouteImport } from './routes/$lang'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as LangIndexRouteImport } from './routes/$lang.index'
 import { Route as LangTestRouteImport } from './routes/$lang.test'
+import { Route as LangLoginRouteImport } from './routes/$lang.login'
 import { Route as LangAuthRouteImport } from './routes/$lang.auth'
 
 const LangRoute = LangRouteImport.update({
@@ -35,6 +36,11 @@ const LangTestRoute = LangTestRouteImport.update({
   path: '/test',
   getParentRoute: () => LangRoute,
 } as any)
+const LangLoginRoute = LangLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => LangRoute,
+} as any)
 const LangAuthRoute = LangAuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -45,12 +51,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$lang': typeof LangRouteWithChildren
   '/$lang/auth': typeof LangAuthRoute
+  '/$lang/login': typeof LangLoginRoute
   '/$lang/test': typeof LangTestRoute
   '/$lang/': typeof LangIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/$lang/auth': typeof LangAuthRoute
+  '/$lang/login': typeof LangLoginRoute
   '/$lang/test': typeof LangTestRoute
   '/$lang': typeof LangIndexRoute
 }
@@ -59,15 +67,29 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$lang': typeof LangRouteWithChildren
   '/$lang/auth': typeof LangAuthRoute
+  '/$lang/login': typeof LangLoginRoute
   '/$lang/test': typeof LangTestRoute
   '/$lang/': typeof LangIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$lang' | '/$lang/auth' | '/$lang/test' | '/$lang/'
+  fullPaths:
+    | '/'
+    | '/$lang'
+    | '/$lang/auth'
+    | '/$lang/login'
+    | '/$lang/test'
+    | '/$lang/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$lang/auth' | '/$lang/test' | '/$lang'
-  id: '__root__' | '/' | '/$lang' | '/$lang/auth' | '/$lang/test' | '/$lang/'
+  to: '/' | '/$lang/auth' | '/$lang/login' | '/$lang/test' | '/$lang'
+  id:
+    | '__root__'
+    | '/'
+    | '/$lang'
+    | '/$lang/auth'
+    | '/$lang/login'
+    | '/$lang/test'
+    | '/$lang/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -105,6 +127,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LangTestRouteImport
       parentRoute: typeof LangRoute
     }
+    '/$lang/login': {
+      id: '/$lang/login'
+      path: '/login'
+      fullPath: '/$lang/login'
+      preLoaderRoute: typeof LangLoginRouteImport
+      parentRoute: typeof LangRoute
+    }
     '/$lang/auth': {
       id: '/$lang/auth'
       path: '/auth'
@@ -117,12 +146,14 @@ declare module '@tanstack/react-router' {
 
 interface LangRouteChildren {
   LangAuthRoute: typeof LangAuthRoute
+  LangLoginRoute: typeof LangLoginRoute
   LangTestRoute: typeof LangTestRoute
   LangIndexRoute: typeof LangIndexRoute
 }
 
 const LangRouteChildren: LangRouteChildren = {
   LangAuthRoute: LangAuthRoute,
+  LangLoginRoute: LangLoginRoute,
   LangTestRoute: LangTestRoute,
   LangIndexRoute: LangIndexRoute,
 }
