@@ -2,6 +2,22 @@ import type { InventoryMenuItem } from "../types/inventory.types";
 
 export const INVENTORY_MENU: InventoryMenuItem[] = [
 	{
+		id: "mail",
+		label: "Correos",
+		icon: "✉️",
+		path: "/en/mail",
+		module: "communication",
+		permission: "mail:read",
+	},
+	{
+		id: "files",
+		label: "Archivos",
+		icon: "📁",
+		path: "/en/files",
+		module: "files",
+		permission: "files:read",
+	},
+	{
 		id: "dashboard",
 		label: "Dashboard Inventario",
 		icon: "📊",
