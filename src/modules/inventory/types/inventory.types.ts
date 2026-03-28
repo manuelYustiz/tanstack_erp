@@ -4,7 +4,7 @@ export interface InventoryMenuItem {
 	icon?: string;
 	path?: string;
 	children?: InventoryMenuItem[];
-	module: "products" | "warehouses" | "movements" | "reports" | "configuration";
+	module: "products" | "warehouses" | "movements" | "reports" | "configuration" | "communication" | "files";
 	permission: string;
 }
 
